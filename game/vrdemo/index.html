@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VR-Demo</title>
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <link rel="stylesheet" href="css/mian.css">
+</head>
+<body>
+<video id="video" autoplay></video>
+<a-scene>
+    <a-plane width="3" height="4" src="res/hongbao.png"
+             position="10 0 -20" rotation="0 0 0" scale="0.5 0.5 0.5" look-controls>
+        <a-animation attribute="scale" from="0.9 0.9 0.9" dur="500" to="1 1 1" repeat="reverse"
+                     direction="alternate"></a-animation>
+        <a-light type="hemisphere" color="#fff">
+            <a-animation attribute="intensity" from="1" dur="500" to="1.5" repeat="reverse"
+                         direction="alternate"></a-animation>
+        </a-light>
+    </a-plane>
+
+    <a-camera>
+        <a-cursor></a-cursor>
+    </a-camera>
+</a-scene>
+</body>
+<script>
+    var hbEl = document.querySelector('a-plane');
+    var camera;
+    hbEl.addEventListener('mouseenter', function () {
+        console.log('我看到红包啦');
+    });
+
+    var videoElement = document.querySelector('video');
+
+    function gotDevices(deviceInfos) {
+        for (var i = 0; i !== deviceInfos.length; ++i) {
+            var deviceInfo = deviceInfos[i];
+            if (deviceInfo.kind === 'videoinput') {
+                camera = deviceInfo.label;
+                console.log('----->'+camera);
+            }
+        }
+    }
+    navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+
+    function gotStream(stream) {
+        window.stream = stream; // make stream available to console
+        videoElement.srcObject = stream;
+        // Refresh button list in case labels have become available
+        return navigator.mediaDevices.enumerateDevices();
+    }
+
+    function start() {
+        if (window.stream) {
+            window.stream.getTracks().forEach(function (track) {
+                track.stop();
+            });
+        }
+        var videoSource = camera;
+        var constraints = {
+            video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+        };
+        navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+    }
+
+    start();
+
+    function handleError(error) {
+        alert('navigator.getUserMedia error: ', error);
+    }
+</script>
+</html>
