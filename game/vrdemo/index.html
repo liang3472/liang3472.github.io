@@ -58,6 +58,7 @@
             });
         }
         var videoSource = camera[1];
+        alert(camera.length);
         var constraints = {
             video: {deviceId: videoSource ? {exact: videoSource} : undefined}
         };
