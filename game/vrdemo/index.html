@@ -41,6 +41,7 @@
                 camera.push(deviceInfo.label);
             }
         }
+        alert(camera.length);
     }
     navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
@@ -58,7 +59,6 @@
             });
         }
         var videoSource = camera[1];
-        alert(camera.length);
         var constraints = {
             video: {deviceId: videoSource ? {exact: videoSource} : undefined}
         };
