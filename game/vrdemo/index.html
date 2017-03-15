@@ -27,7 +27,7 @@
 </body>
 <script>
     var hbEl = document.querySelector('a-plane');
-    var camera;
+    var camera = [];
     hbEl.addEventListener('mouseenter', function () {
         console.log('我看到红包啦');
     });
@@ -38,8 +38,7 @@
         for (var i = 0; i !== deviceInfos.length; ++i) {
             var deviceInfo = deviceInfos[i];
             if (deviceInfo.kind === 'videoinput') {
-                camera = deviceInfo.label;
-                console.log('----->'+camera);
+                camera.push(deviceInfo.label);
             }
         }
     }
@@ -58,7 +57,7 @@
                 track.stop();
             });
         }
-        var videoSource = camera;
+        var videoSource = camera[0];
         var constraints = {
             video: {deviceId: videoSource ? {exact: videoSource} : undefined}
         };
