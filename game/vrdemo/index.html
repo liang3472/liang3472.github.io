@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>VR-Demo</title>
+    <script src="//github.elemecdn.com/amfe/lib-flexible/master/build/flexible.js"></script>
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
     <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
     <script src="components/set-image.js"></script>
@@ -42,11 +43,23 @@
         <a-cursor></a-cursor>
     </a-camera>
 </a-scene>
+
+<div class="shade">
+    <div class="title-congratulate">
+        <span class="close"></span>
+        <div class="title">恭喜您获得 <font style="font-size: 0.6rem">10</font> 元红包!</div>
+        <span class="img"></span>
+        <div class="img-btn">
+            <span>点我下单开启美食之旅</span>
+        </div>
+    </div>
+</div>
 </body>
 <script>
     var hbEl = document.querySelector('a-image');
     hbEl.addEventListener('mouseenter', function () {
         console.log('我看到红包啦');
+        $('.shade').get(0).style.display = 'block';
     });
 
     // 全屏时重置视频尺寸
@@ -77,8 +90,8 @@
         window.stream = stream; // make variable available to browser console
 
         $('body').append('<video autoplay id="videoBg"></video>');
-        var video = document.querySelector('video');
-        video.srcObject = stream;
+//        var video = document.querySelector('video');
+//        video.srcObject = stream;
     }
     function handleError(error) {
         if (error.name === 'ConstraintNotSatisfiedError') {
