@@ -90,8 +90,8 @@
         window.stream = stream; // make variable available to browser console
 
         $('body').append('<video autoplay id="videoBg"></video>');
-//        var video = document.querySelector('video');
-//        video.srcObject = stream;
+        var video = document.querySelector('video');
+        video.srcObject = stream;
     }
     function handleError(error) {
         if (error.name === 'ConstraintNotSatisfiedError') {
