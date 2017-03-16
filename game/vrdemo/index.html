@@ -51,43 +51,43 @@
         console.log('我看到红包啦');
     });
 
-    var videoElement = document.querySelector('video');
-
-    function gotDevices(deviceInfos) {
-        for (var i = 0; i !== deviceInfos.length; ++i) {
-            var deviceInfo = deviceInfos[i];
-            if (deviceInfo.kind === 'videoinput') {
-                camera = deviceInfo.label;
-                console.log('----->' + camera);
-            }
-        }
-    }
-    navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
-
-    function gotStream(stream) {
-        window.stream = stream; // make stream available to console
-        videoElement.srcObject = stream;
-        // Refresh button list in case labels have become available
-        return navigator.mediaDevices.enumerateDevices();
-    }
-
-    function start() {
-        if (window.stream) {
-            window.stream.getTracks().forEach(function (track) {
-                track.stop();
-            });
-        }
-        var videoSource = camera;
-        var constraints = {
-            video: {deviceId: videoSource ? {exact: videoSource} : undefined}
-        };
-        navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
-    }
-
-    start();
-
-    function handleError(error) {
-        alert('navigator.getUserMedia error: ', error);
-    }
+//    var videoElement = document.querySelector('video');
+//
+//    function gotDevices(deviceInfos) {
+//        for (var i = 0; i !== deviceInfos.length; ++i) {
+//            var deviceInfo = deviceInfos[i];
+//            if (deviceInfo.kind === 'videoinput') {
+//                camera = deviceInfo.label;
+//                console.log('----->' + deviceInfo);
+//            }
+//        }
+//    }
+//    navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+//
+//    function gotStream(stream) {
+//        window.stream = stream; // make stream available to console
+//        videoElement.srcObject = stream;
+//        // Refresh button list in case labels have become available
+//        return navigator.mediaDevices.enumerateDevices();
+//    }
+//
+//    function start() {
+//        if (window.stream) {
+//            window.stream.getTracks().forEach(function (track) {
+//                track.stop();
+//            });
+//        }
+//        var videoSource = camera;
+//        var constraints = {
+//            video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+//        };
+//        navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+//    }
+//
+//    start();
+//
+//    function handleError(error) {
+//        alert('navigator.getUserMedia error: ', error);
+//    }
 </script>
 </html>
