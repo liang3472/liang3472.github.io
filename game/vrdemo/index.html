@@ -4,22 +4,40 @@
     <meta charset="UTF-8">
     <title>VR-Demo</title>
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
+    <script src="components/set-image.js"></script>
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
     <link rel="stylesheet" href="css/mian.css">
-    <script src="https://jsconsole.com/js/remote.js?8cb5f0d0-0fd5-4775-a8e8-a34b3b9c2743"></script>
 </head>
 <body>
 <video id="video" autoplay></video>
 <a-scene>
-    <a-plane width="3" height="4" src="res/hongbao.png"
-             position="10 0 -20" rotation="0 0 0" scale="0.5 0.5 0.5" look-controls>
+    <a-assets>
+        <img id="egg-nomal" src="res/egg_nomal.png">
+        <img id="egg-break" src="res/egg_break.png">
+        <img id="city" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
+    </a-assets>
+
+
+    <a-image
+            id="hb"
+            width="6" height="8"
+            src="#egg-nomal"
+            position="10 0 -20"
+            rotation="0 0 0"
+            scale="0.5 0.5 0.5"
+            set-image="on: mouseenter; target: #hb; src: #egg-break"
+            look-controls>
         <a-animation attribute="scale" from="0.9 0.9 0.9" dur="500" to="1 1 1" repeat="reverse"
                      direction="alternate"></a-animation>
         <a-light type="hemisphere" color="#fff">
-            <a-animation attribute="intensity" from="1" dur="500" to="1.5" repeat="reverse"
+            <a-animation attribute="intensity" from="1" dur="500" to="1.2" repeat="reverse"
                          direction="alternate"></a-animation>
         </a-light>
-    </a-plane>
+    </a-image>
+
+    <!-- 360-degree image. -->
+    <a-sky id="image-360" radius="50" src="#city"></a-sky>
 
     <a-camera>
         <a-cursor></a-cursor>
@@ -40,6 +58,7 @@
             var deviceInfo = deviceInfos[i];
             if (deviceInfo.kind === 'videoinput') {
                 camera = deviceInfo.label;
+                console.log('----->' + camera);
             }
         }
     }
