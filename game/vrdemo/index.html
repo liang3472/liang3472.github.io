@@ -7,17 +7,16 @@
     <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
     <script src="components/set-image.js"></script>
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="//github.elemecdn.com/uglifyjs!components/zepto/1.1.6/zepto.min.js"></script>
     <link rel="stylesheet" href="css/mian.css">
 </head>
 <body>
-<video id="video" autoplay></video>
 <a-scene>
     <a-assets>
         <img id="egg-nomal" src="res/egg_nomal.png">
         <img id="egg-break" src="res/egg_break.png">
         <img id="city" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
     </a-assets>
-
 
     <a-image
             id="hb"
@@ -50,7 +49,15 @@
         console.log('我看到红包啦');
     });
 
-    var video = document.querySelector('video');
+    // 全屏时重置视频尺寸
+    function onResize() {
+        $('#videoBg').height(window.screen.height)
+                .width('auto');
+    }
+    window.addEventListener('resize', function () {
+        onResize();
+    });
+
     // Put variables in global scope to make them available to the browser console.
     var constraints = window.constraints = {
         audio: false,
@@ -64,10 +71,13 @@
         var videoTracks = stream.getVideoTracks();
         console.log('Got stream with constraints:', constraints);
         console.log('Using video device: ' + videoTracks[0].label);
-        stream.oninactive = function() {
+        stream.oninactive = function () {
             console.log('Stream inactive');
         };
         window.stream = stream; // make variable available to browser console
+
+        $('body').append('<video autoplay id="videoBg"></video>');
+        var video = document.querySelector('video');
         video.srcObject = stream;
     }
     function handleError(error) {
@@ -88,9 +98,13 @@
             console.error(error);
         }
     }
-    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
-        navigator.mediaDevices.getUserMedia(constraints).
-        then(handleSuccess).catch(handleError);
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+    } else {
+        // 不支持调用摄像头的时候，使用默认场景，小树林。
+        $('#sky').attr('src', "https://c1.staticflickr.com/8/7376/16218590470_468084c950_h.jpg")
+                .removeAttr('opacity')
+                .removeAttr('color');
     }
 </script>
 </html>
