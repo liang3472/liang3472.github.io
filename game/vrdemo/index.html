@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/mian.css">
 </head>
 <body>
-<!--<video id="video" autoplay></video>-->
+<video id="video" autoplay></video>
 <a-scene>
     <a-assets>
         <img id="egg-nomal" src="res/egg_nomal.png">
@@ -37,7 +37,7 @@
     </a-image>
 
     <!-- 360-degree image. -->
-    <a-sky id="image-360" radius="50" src="#city"></a-sky>
+    <!--<a-sky id="image-360" radius="50" src="#city"></a-sky>-->
 
     <a-camera>
         <a-cursor></a-cursor>
@@ -45,49 +45,52 @@
 </a-scene>
 </body>
 <script>
-    var hbEl = document.querySelector('a-plane');
-    var camera;
+    var hbEl = document.querySelector('a-image');
     hbEl.addEventListener('mouseenter', function () {
         console.log('我看到红包啦');
     });
 
-//    var videoElement = document.querySelector('video');
-//
-//    function gotDevices(deviceInfos) {
-//        for (var i = 0; i !== deviceInfos.length; ++i) {
-//            var deviceInfo = deviceInfos[i];
-//            if (deviceInfo.kind === 'videoinput') {
-//                camera = deviceInfo.label;
-//                console.log('----->' + deviceInfo);
-//            }
-//        }
-//    }
-//    navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
-//
-//    function gotStream(stream) {
-//        window.stream = stream; // make stream available to console
-//        videoElement.srcObject = stream;
-//        // Refresh button list in case labels have become available
-//        return navigator.mediaDevices.enumerateDevices();
-//    }
-//
-//    function start() {
-//        if (window.stream) {
-//            window.stream.getTracks().forEach(function (track) {
-//                track.stop();
-//            });
-//        }
-//        var videoSource = camera;
-//        var constraints = {
-//            video: {deviceId: videoSource ? {exact: videoSource} : undefined}
-//        };
-//        navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
-//    }
-//
-//    start();
-//
-//    function handleError(error) {
-//        alert('navigator.getUserMedia error: ', error);
-//    }
+    var video = document.querySelector('video');
+    // Put variables in global scope to make them available to the browser console.
+    var constraints = window.constraints = {
+        audio: false,
+        video: {
+            facingMode: {
+                exact: "environment"
+            }
+        }
+    };
+    function handleSuccess(stream) {
+        var videoTracks = stream.getVideoTracks();
+        console.log('Got stream with constraints:', constraints);
+        console.log('Using video device: ' + videoTracks[0].label);
+        stream.oninactive = function() {
+            console.log('Stream inactive');
+        };
+        window.stream = stream; // make variable available to browser console
+        video.srcObject = stream;
+    }
+    function handleError(error) {
+        if (error.name === 'ConstraintNotSatisfiedError') {
+            errorMsg('The resolution ' + constraints.video.width.exact + 'x' +
+                    constraints.video.width.exact + ' px is not supported by your device.');
+        } else if (error.name === 'PermissionDeniedError') {
+            errorMsg('Permissions have not been granted to use your camera and ' +
+                    'microphone, you need to allow the page access to your devices in ' +
+                    'order for the demo to work.');
+        }
+        errorMsg('getUserMedia error: ' + error.name, error);
+    }
+    function errorMsg(msg, error) {
+//        alert(msg);
+        console.log(msg);
+        if (typeof error !== 'undefined') {
+            console.error(error);
+        }
+    }
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+        navigator.mediaDevices.getUserMedia(constraints).
+        then(handleSuccess).catch(handleError);
+    }
 </script>
 </html>
