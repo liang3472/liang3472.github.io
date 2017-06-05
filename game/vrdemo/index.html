@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>VR-Demo</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="flexible" content="initial-dpr=1"/>
     <script src="//github.elemecdn.com/amfe/lib-flexible/master/build/flexible.js"></script>
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="//github.elemecdn.com/vuejs/vue/v1.0.15/dist/vue.min.js"></script>
     <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
     <script src="components/set-image.js"></script>
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-    <script src="//github.elemecdn.com/uglifyjs!components/zepto/1.1.6/zepto.min.js"></script>
     <link rel="stylesheet" href="css/mian.css">
 </head>
-<body>
+<body id="game">
+<video id="video" autoplay></video>
 <a-scene>
     <a-assets>
         <img id="egg-nomal" src="res/egg_nomal.png">
         <img id="egg-break" src="res/egg_break.png">
-        <img id="city" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
+        <img id="city" src="./res/WechatIMG4276.jpeg">
     </a-assets>
+
 
     <a-image
             id="hb"
@@ -26,7 +30,7 @@
             position="10 0 -20"
             rotation="0 0 0"
             scale="0.5 0.5 0.5"
-            set-image="on: mouseenter; target: #hb; src: #egg-break"
+            see-cat
             look-controls>
         <a-animation attribute="scale" from="0.9 0.9 0.9" dur="500" to="1 1 1" repeat="reverse"
                      direction="alternate"></a-animation>
@@ -43,81 +47,76 @@
         <a-cursor></a-cursor>
     </a-camera>
 </a-scene>
-
-<div class="shade">
-    <div class="title-congratulate">
-        <span class="close"></span>
-        <div class="title">恭喜您获得 <font style="font-size: 0.6rem">10</font> 元红包!</div>
-        <span class="img"></span>
-        <div class="img-btn">
-            <span>点我下单开启美食之旅</span>
-        </div>
-    </div>
-</div>
+<button class="catch" @click="catchCat()">捉猫猫</button>
 </body>
 <script>
-    var hbEl = document.querySelector('a-image');
-    hbEl.addEventListener('mouseenter', function () {
-        console.log('我看到红包啦');
-        $('.shade').get(0).style.display = 'block';
-    });
+    var camera;
+    var isLookAt = false;
+    var videoElement = document.querySelector('video');
+    var cat = document.querySelector('a-image');
 
-    // 全屏时重置视频尺寸
-    function onResize() {
-        $('#videoBg').height(window.screen.height)
-                .width('auto');
-    }
-    window.addEventListener('resize', function () {
-        onResize();
-    });
-
-    // Put variables in global scope to make them available to the browser console.
-    var constraints = window.constraints = {
-        audio: false,
-        video: {
-            facingMode: {
-                exact: "environment"
+    function gotDevices(deviceInfos) {
+        for (var i = 0; i !== deviceInfos.length; ++i) {
+            var deviceInfo = deviceInfos[i];
+            if (deviceInfo.kind === 'videoinput') {
+                camera = deviceInfo.label;
+                console.log('----->' + camera);
             }
         }
-    };
-    function handleSuccess(stream) {
-        var videoTracks = stream.getVideoTracks();
-        console.log('Got stream with constraints:', constraints);
-        console.log('Using video device: ' + videoTracks[0].label);
-        stream.oninactive = function () {
-            console.log('Stream inactive');
-        };
-        window.stream = stream; // make variable available to browser console
+    }
+    navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
-        $('body').append('<video autoplay id="videoBg"></video>');
-        var video = document.querySelector('video');
-        video.srcObject = stream;
+    function gotStream(stream) {
+        window.stream = stream; // make stream available to console
+        videoElement.srcObject = stream;
+        // Refresh button list in case labels have become available
+        return navigator.mediaDevices.enumerateDevices();
     }
+
+    function start() {
+        if (window.stream) {
+            window.stream.getTracks().forEach(function (track) {
+                track.stop();
+            });
+        }
+        var videoSource = camera;
+        var constraints = {
+            video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+        };
+        navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+    }
+
+    start();
+
     function handleError(error) {
-        if (error.name === 'ConstraintNotSatisfiedError') {
-            errorMsg('The resolution ' + constraints.video.width.exact + 'x' +
-                    constraints.video.width.exact + ' px is not supported by your device.');
-        } else if (error.name === 'PermissionDeniedError') {
-            errorMsg('Permissions have not been granted to use your camera and ' +
-                    'microphone, you need to allow the page access to your devices in ' +
-                    'order for the demo to work.');
+        alert('navigator.getUserMedia error: ', error);
+    }
+
+    AFRAME.registerComponent('see-cat', {
+        init: function () {
+            var el = this.el;
+            el.addEventListener('mouseenter', function () {
+                console.log('焦点锁定');
+                isLookAt = true;
+            });
+            el.addEventListener('mouseleave', function () {
+                console.log('焦点解除锁定');
+                isLookAt = false;
+            });
         }
-        errorMsg('getUserMedia error: ' + error.name, error);
-    }
-    function errorMsg(msg, error) {
-//        alert(msg);
-        console.log(msg);
-        if (typeof error !== 'undefined') {
-            console.error(error);
+    });
+
+    new Vue({
+        el: '#game',
+        methods:{
+            catchCat: function () {
+                console.log('是否抓到猫：' + isLookAt);
+                if(isLookAt){
+                    cat.setAttribute('src','#egg-break');
+                }
+            }
         }
-    }
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
-    } else {
-        // 不支持调用摄像头的时候，使用默认场景，小树林。
-        $('#sky').attr('src', "https://c1.staticflickr.com/8/7376/16218590470_468084c950_h.jpg")
-                .removeAttr('opacity')
-                .removeAttr('color');
-    }
+    });
+
 </script>
 </html>

@@ -3,71 +3,20 @@ body {
     margin: 0;
 }
 
-#videoBg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-}
-
-.shade {
-    position: fixed;
-    display: none;
-    top: 0;
-    left: 0;
+#video {
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, .7);
-    z-index: 10001;
-}
-
-.shade .close {
     position: absolute;
-    width: 0.66rem;
-    height: 0.66rem;
-    display: block;
-    background: url(../res/icon_close.png) no-repeat;
-    background-size: 100% auto;
-    right: -0.1rem;
-    top: -0.7rem;
 }
 
-.shade .img-btn {
-    width: 4.64rem;
-    height: 0.99rem;
-    color: #ffffff;
-    font-size: 0.35rem;
-    text-align: center;
-    line-height: 0.85rem;
-    background: url(../res/icon_popup.png) no-repeat;
-    background-size: 100% auto;
-    margin-left: 0.48rem;
-}
-
-.title-congratulate {
-    position: relative;
-    width: 5.6rem;
-    height: 7rem;
+.catch {
+    width: 2rem;
+    height: 1rem;
+    background: #fff;
+    font-size: 0.2rem;
+    position: absolute;
+    bottom: 1rem;
     left: 50%;
-    top: 25%;
-    margin-left: -2.8rem;
-}
-
-.shade .title-congratulate .title {
-    width: 100%;
-    color: #fff100;
-    font-size: 0.45rem;
     text-align: center;
-    font-weight: bold;
-}
-
-.shade .title-congratulate .img {
-    width: 5.6rem;
-    height: 5.55rem;
-    display: block;
-    background: url(../res/pic_congratulate.png) no-repeat;
-    background-size: 100% auto;
-    margin-top: -0.35rem;
+    margin-left: -1rem;
 }
