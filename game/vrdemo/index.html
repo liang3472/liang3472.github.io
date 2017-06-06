@@ -53,9 +53,8 @@
 <button class="catch" @click="catchCat()">捉猫猫</button>
 </body>
 <script>
-    var camera;
     var isLookAt = false;
-    var videoElement = document.querySelector('video');
+    var video = document.querySelector('video');
     var cat = document.querySelector('a-image');
 
     // 全屏时重置视频尺寸
