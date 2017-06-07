@@ -17,12 +17,12 @@
     <script>eruda.init();</script>
 </head>
 <body id="game">
-<!--<video id="video" autoplay></video>-->
+<video id="video" autoplay></video>
 <a-scene>
     <a-assets>
         <img id="egg-nomal" src="res/egg_nomal.png">
         <img id="egg-break" src="res/egg_break.png">
-        <img id="city" src="https://c1.staticflickr.com/8/7376/16218590470_468084c950_h.jpg">
+        <img id="city" src="./res/WechatIMG4276.jpeg">
     </a-assets>
 
 
@@ -44,13 +44,13 @@
     </a-image>
 
     <!-- 360-degree image. -->
-    <a-sky id="image-360" radius="50" src="#city"></a-sky>
+    <!--<a-sky id="image-360" radius="50" src="#city"></a-sky>-->
 
     <a-camera>
         <a-cursor></a-cursor>
     </a-camera>
 </a-scene>
-<!--<button class="catch" @click="catchCat()">捉猫猫</button>-->
+<button class="catch" @click="catchCat()">捉猫猫</button>
 </body>
 <script>
     var camera;
