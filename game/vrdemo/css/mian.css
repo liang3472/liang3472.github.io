@@ -53,7 +53,6 @@ body {
     line-height: 0.85rem;
     background: url(../res/icon_popup.png) no-repeat;
     background-size: 100% auto;
-    margin-left: 0.48rem;
 }
 
 .shade .title {
@@ -96,5 +95,6 @@ body {
     display: block;
     background: url(../res/pic_sorry.png) no-repeat;
     background-size: 100% auto;
+    margin-left: -0.44rem;
     margin-bottom: 0.5rem;
 }
