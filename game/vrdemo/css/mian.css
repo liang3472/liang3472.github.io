@@ -42,7 +42,7 @@ body {
     width: 0.66rem;
     height: 0.66rem;
     display: block;
-    background: url(res/icon_close.png) no-repeat;
+    background: url(../res/icon_close.png) no-repeat;
     background-size: 100% auto;
     right: -0.1rem;
     top: -0.7rem;
@@ -55,7 +55,7 @@ body {
     font-size: 0.35rem;
     text-align: center;
     line-height: 0.85rem;
-    background: url(res/icon_popup.png) no-repeat;
+    background: url(../res/icon_popup.png) no-repeat;
     background-size: 100% auto;
     margin-left: 0.48rem;
 }
@@ -72,7 +72,7 @@ body {
     width: 5.6rem;
     height: 5.55rem;
     display: block;
-    background: url(res/pic_congratulate.png) no-repeat;
+    background: url(../res/pic_congratulate.png) no-repeat;
     background-size: 100% auto;
     margin-top: -0.35rem;
 }
@@ -98,7 +98,7 @@ body {
     width: 6.47rem;
     height: 4.45rem;
     display: block;
-    background: url(res/pic_sorry.png) no-repeat;
+    background: url(../res/pic_sorry.png) no-repeat;
     background-size: 100% auto;
     margin-left: -0.44rem;
     margin-bottom: 0.5rem;
