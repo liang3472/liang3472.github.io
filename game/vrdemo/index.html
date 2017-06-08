@@ -25,7 +25,6 @@
         <img id="city" src="./res/WechatIMG4276.jpeg">
     </a-assets>
 
-
     <a-image
             id="hb"
             width="6" height="8"
@@ -51,6 +50,16 @@
     </a-camera>
 </a-scene>
 <button class="catch" @click="catchCat()">捉猫猫</button>
+<div class="eleme-lottery-model"  transition="fade">
+    <div class="detail" id="lottery-modal" transition="top">
+        <span class="close"></span>
+        <div class="detail-body sorry">
+            <h2 class="title">没抽中</h2>
+            <p class="text">重要的是开心咯~</p>
+            <button type="button" id="btn-save">再试一次</button>
+        </div>
+    </div>
+</div>
 </body>
 <script>
     var camera;
@@ -107,7 +116,6 @@
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
     } else {
-        console.log('不能调用摄像头');
         // 不支持调用摄像头的时候，使用默认场景，小树林。
         $('#sky').attr('src', "https://c1.staticflickr.com/8/7376/16218590470_468084c950_h.jpg")
                 .removeAttr('opacity')
@@ -130,11 +138,11 @@
 
     new Vue({
         el: '#game',
-        methods:{
+        methods: {
             catchCat: function () {
                 console.log('是否抓到猫：' + isLookAt);
-                if(isLookAt){
-                    cat.setAttribute('src','#egg-break');
+                if (isLookAt) {
+                    cat.setAttribute('src', '#egg-break');
                 }
             }
         }

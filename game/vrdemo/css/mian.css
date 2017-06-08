@@ -25,3 +25,123 @@ body {
     text-align: center;
     margin-left: -1rem;
 }
+
+.eleme-lottery-model {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+    background-color: #000000;
+    background-color: rgba(0, 0, 0, .9);
+    z-index: 1000;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    opacity: 0;
+}
+
+.detail {
+    position: relative;
+    margin: 4.06rem auto 2rem auto;
+    width: 8rem;
+    border-radius: .2rem;
+    opacity: 1;
+    z-index: 1001;
+    background-color: #b42807;
+    font-size: .426rem;
+    line-height: 1.5rem;
+
+    .close {
+        position: absolute;
+        top: -2.05rem;
+        right: .5rem;
+        width: .61rem;
+        height: 2.05rem;
+        background-image: url(/themes/yilia/source/game/vrdemo/res/detail_close.png);
+        background-repeat: no-repeat;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-background-size: 100% 100%;
+        background-size: 100% 100%;
+    }
+}
+
+.detail h2.title {
+    text-align: center;
+    color: #fff2b6;
+    font-size: 1.2em;
+    margin-top: 0.3rem;
+}
+
+.detail p.text {
+    text-align: center;
+    color: #fff2b6;
+    font-weight: bold;
+}
+
+.detail .sorry {
+    height: 8.8rem;
+    padding-top: 4.5rem;
+    background: url(/themes/yilia/source/game/vrdemo/res/detail_close.png) no-repeat center;
+    background-position-y: 0.8rem;
+    -webkit-background-size: contain;
+    background-size: 3.8rem;
+}
+
+.detail-header p {
+    margin-bottom: .32rem;
+    text-align: center;
+}
+
+.detail-header img {
+    display: block;
+    width: 100%;
+    -webkit-border-top-left-radius: .2rem;
+    -webkit-border-top-right-radius: .2rem;
+    border-top-left-radius: .2rem;
+    border-top-right-radius: .2rem;
+}
+
+.detail-body {
+    position: relative;
+    margin-bottom: .2066rem;
+}
+
+.detail-body input, .detail-body textarea {
+    padding-left: 5px;
+}
+.detail-body textarea {
+    padding-top: 7px;
+}
+
+.detail-body p.err-tips {
+    position: absolute;
+    top: 4px;
+    right: 20px;
+    padding: 3px;
+    color: #d7373d;
+    border: 1px solid #d7373d;
+    border-radius: 4px;
+}
+
+#lottery-modal .eleme-lottery-wrapper .left {
+    margin-top: 5px;
+    width: 8.02rem;
+    background: #fff;
+}
+
+#btn-save {
+    display: block;
+    left: 0;
+    right: 0;
+    margin: 0.5rem 1rem 0 1rem;
+    color: #7a1703;
+    background: #f9cb08;
+    border: 0;
+    padding: .4rem 0;
+    width: 6rem;
+    font-size: .5rem;
+    border-radius: .2rem;
+    border-radius: .2rem;
+    font-weight: bolder;
+}
