@@ -1,6 +1,4 @@
-var camera;
 var isLookAt = false;
-var videoElement = document.querySelector('video');
 var cat = document.querySelector('a-image');
 
 // 全屏时重置视频尺寸
@@ -50,7 +48,7 @@ function errorMsg(msg, error) {
   }
 }
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-  // navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+  navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
 } else {
   // 不支持调用摄像头的时候，使用默认场景，小树林。
   $('#sky').attr('src', "https://c1.staticflickr.com/8/7376/16218590470_468084c950_h.jpg")
