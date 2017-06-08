@@ -43,14 +43,14 @@ function handleError(error) {
   errorMsg('getUserMedia error: ' + error.name, error);
 }
 function errorMsg(msg, error) {
-//        alert(msg);
+  // alert(msg);
   console.log(msg);
   if (typeof error !== 'undefined') {
     console.error(error);
   }
 }
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-//        navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+  // navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
 } else {
   // 不支持调用摄像头的时候，使用默认场景，小树林。
   $('#sky').attr('src', "https://c1.staticflickr.com/8/7376/16218590470_468084c950_h.jpg")

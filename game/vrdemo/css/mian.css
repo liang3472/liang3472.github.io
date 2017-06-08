@@ -15,15 +15,11 @@ body {
 }
 
 .catch {
-    width: 2rem;
-    height: 1rem;
-    background: #fff;
-    font-size: 0.2rem;
     position: absolute;
     bottom: 1rem;
     left: 50%;
     text-align: center;
-    margin-left: -1rem;
+    margin-left: -2.32rem;
 }
 
 .shade {
@@ -48,7 +44,7 @@ body {
     top: -0.7rem;
 }
 
-.shade .img-btn {
+.img-btn {
     width: 4.64rem;
     height: 0.99rem;
     color: #ffffff;
@@ -100,6 +96,5 @@ body {
     display: block;
     background: url(../res/pic_sorry.png) no-repeat;
     background-size: 100% auto;
-    margin-left: -0.44rem;
     margin-bottom: 0.5rem;
 }
